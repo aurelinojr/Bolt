@@ -3,7 +3,7 @@ import { EnumHttpMethod } from '../types/generic/EnumHttpMethod';
 import { DtoType } from '../types/generic/DtoType';
 
 class Utils {
-    //
+    
     static replaceKeysWithArray(params: ParamsDictionary, realNames: string[]) : ParamsDictionary {
         const len = realNames.length;
         if (len > 0) {     
@@ -18,7 +18,6 @@ class Utils {
               obj[currentKey] = params[currentKey];
             }  
           }
-          console.log(JSON.stringify(obj));
           return obj;
         }  
         return params;
