@@ -2,9 +2,9 @@
   "name": "bolt",
   "version": "1.0.0",
   "description": "Facilitador de construção de software",
-  "main": "./dist/src/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "tsc && node ./dist/src/server.js",
+    "start": "tsc && node ./dist/server.js",
     "test": "jest"
   },
   "author": "Aurelino Ferreira",
