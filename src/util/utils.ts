@@ -18,7 +18,6 @@ class Utils {
               obj[currentKey] = params[currentKey];
             }  
           }
-          console.log(JSON.stringify(obj));
           return obj;
         }  
         return params;
