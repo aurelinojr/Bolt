@@ -1,81 +1,59 @@
 # Bolt
 /**
- * Descrição geral da API.
- *
- * @fileoverview Essa API Restful tem o objetivo de facilitar o desenvolvimento de aplicações em Node.js, minimizando 
- * a escrita de código e criação de arquivos no padrão MVC para CRUD - (Create, Read, Update e Delete).
- * @version 1.0.0
- *
- * @description
- * Esta API Restful foi construída com o objetivo de fornecer funcionalidades prontas para facilitar o desenvolvimento de
- * aplicações utilizando o padrão MVC. 
- * 
- * Padrões de projetos utilizados: (Facade, Singleton, Abtract Factory, Factory, MVC)
- * 
- * Ela possui algumas funcionalidades como: 
- * 
- * 1. Uso de fábrica para qualquer ORM (Prisma, Sequelize, TypeORM etc... Desde que implemente as interfaces).
- * 2. Mensageria com RabbitMQ (Produtor e Consumidor).
- * 3. Validação de campos da requisição.
- * 4. Controladores com serviço default para CRUD pronto e extensível para funcionalidades específicas.
- * 5. Criação de rotas de forma simples, com apenas uma linha de código e funcionalidade pronta para cada método HTTP para agilizar 
- *    o processo de desenvolvimento.
- * 
- * Funcionamento:
- * 
- * Deve-se definir as rotas dos endpoint no arquivo rotas.ts como mostra o exemplo abaixo:
- * 
- * O método addRoute deve ser informado os seguintes parâmetros: 
- * 1. O método HTTP.
- * 2. A rota (endpoint). 
- * 3. O model(entidade/tabela) do ORM. 
- * 4. Os nomes reais dos campos porque se o nome do parâmetro seguido do caracter ":", pode ser diferente da 
- *    tabela e você pode especificar o nome do campo real para não ocorrer um erro, 5 parâmetro é uma lista de 
- *    campos requeridos para serem validados antes do body ser enviado para o repositório.
- * 5. Lista de campos requeridos para evitar que os dados sejam validados no repositório.
- * 6. Lista de campos que não devem aparecer no resultado
- * 7. Serviço específico que pode ser estendido da classe Service para que seja chamado na rota informada.
- * 
- * controllers.addRoute(EnumHttpMethod.Get,'/users/:id','user',[],[],[], new Service(Repository));
- * controllers.addRoute(EnumHttpMethod.Post,'/users','user',[],['email','name','username'],[], new Service(Repository));
- * 
- * A unidade src/connectores/Connector.ts informa a aplicação qual conector ela deve utilizar, como mostra a linha de código abaixo:
- * 
- * const Connector : IConnectorFactory<any> = new ConnectorFactory().Connector(EnumConnectorType.Prisma);
- * 
- * A interface IConnectorFactory fornece o contrato para a criação de uma fábrica de conectores, com o conector e o repositório dele, 
- * que nesse caso está sendo utilizado o PrismaClient, podendo ser qualquer um outro desde que seja implemetado. A interface IRepositório
- * é um contrato para implementação de um facade para os métodos de CRUD do conector utilizado, implementado na classe PrismaRepository.
- * 
- * A unidade src/repositories/Repository.ts exporta o repositório do conector selecionado na unidade Connector. Isso é muito importante porque basta
- * mudá-lo na unidade Connector.ts que todo o framwork funcionará para o conector informado, desde que esse seja implementado.
- * 
- * const Repository = Connector.getRepository();
- * 
- * O schema ORM da aplicação está no arquivo src/prisma/schema.prisma.ts
- * 
- * O middler de validação dos campos da requisição está na unidade src/validator/Validator.ts
- * 
- * Todas as rotas desse exemplo:
- *
- * const userController = new Controllers();
- *
- * userController.addRoute(EnumHttpMethod.Get,'/users','user',[],[],['username'],new Service(Repository));
- * userController.addRoute(EnumHttpMethod.Get,'/users/:id','user',[],[],[],new Service(Repository));
- * userController.addRoute(EnumHttpMethod.Post,'/users','user',[],['email','name','username'],[],new Service(Repository));
- * userController.addRoute(EnumHttpMethod.Put,'/users/:id','user',[],[],[],new Service(Repository));  
- * userController.addRoute(EnumHttpMethod.Delete,'/users/:id','user',[],[],[],new Service(Repository));
- * 
- * Essas linhas acima criam um CRUD de usuários.
- * 
- * Para que possa enviar e receber mensagens para o RabbitMQ é preciso criar uma variável de ambiente <CLOUDAMQP_URL> e fornecer a url
- * de conexão. Essa variável é utilizada na class RabbitMQ.
- *  
- * Mais informações sobre cada endpoint estão disponíveis na documentação individual de cada função/módulo.
- *
- * @author
- * Aurelino Ferreira dos Santos Junior
- *
- * @see
- * contato: aurelino.ferreira@gmail.com
- */
+* General description of the API.
+* @fileoverview This Restful API aims to facilitate the development of Node.js applications, minimizing
+* the need for writing code and creating MVC pattern files for CRUD - (Create, Read, Update, and Delete).
+* @version 1.0.0
+* @description
+* This Restful API was built with the purpose of providing ready-made functionalities to ease the development of
+* applications using the MVC pattern.
+* Design patterns used: (Facade, Singleton, Abstract Factory, Factory, MVC)
+* It offers several features, including:
+* - Using a factory for any ORM (Prisma, Sequelize, TypeORM, etc... as long as they implement the interfaces).
+* - Messaging with RabbitMQ (Producer and Consumer).
+* - Request field validation.
+* - Controllers with a default CRUD service that can be extended for specific functionalities.
+* - Simple route creation with just one line of code, and ready-made functionality for each HTTP method to streamline
+*   the development process.
+* How it works:
+* Endpoint routes should be defined in the "rotas.ts" file, as shown in the example below:
+* The "addRoute" method should be provided with the following parameters:
+* - The HTTP method.
+* - The route (endpoint).
+* - The ORM model (entity/table).
+* - The actual names of fields, because if the parameter name followed by ":" differs from the table's field name,
+*   you can specify the real field name to avoid errors.
+* - The fifth parameter is a list of required fields that will be validated before the body is sent to the repository.
+* - A list of fields that should not appear in the result.
+* - A specific service that can be extended from the Service class and called on the specified route.
+* Example of adding routes:
+* controllers.addRoute(EnumHttpMethod.Get, '/users/:id', 'user', [], [], [], new Service(Repository));
+* controllers.addRoute(EnumHttpMethod.Post, '/users', 'user', [], ['email', 'name', 'username'], [], new Service(Repository));
+* The unit "src/connectors/Connector.ts" informs the application which connector to use, as shown in the following line of code:
+* const Connector: IConnectorFactory = new ConnectorFactory().Connector(EnumConnectorType.Prisma);
+* The "IConnectorFactory" interface provides the contract for creating a connector factory, with the connector and its repository,
+* in this case, the PrismaClient is being used, but it can be any other as long as it is implemented.
+* The "IRepository" interface is a contract for implementing a facade for the CRUD methods of the used connector,
+* implemented in the "PrismaRepository" class.
+* The "src/repositories/Repository.ts" unit exports the repository of the selected connector in the "Connector" unit.
+* This is very important because by changing it in the "Connector.ts" unit, the entire framework will work for the specified connector,
+* as long as it is implemented.
+* const Repository = Connector.getRepository();
+* The ORM schema of the application is in the "src/prisma/schema.prisma.ts" file.
+* The request field validation middleware is in the "src/validator/Validator.ts" unit.
+* All routes in this example:
+* const userController = new Controllers();
+* userController.addRoute(EnumHttpMethod.Get, '/users', 'user', [], [], ['username'], new Service(Repository));
+* userController.addRoute(EnumHttpMethod.Get, '/users/:id', 'user', [], [], [], new Service(Repository));
+* userController.addRoute(EnumHttpMethod.Post, '/users', 'user', [], ['email', 'name', 'username'], [], new Service(Repository));
+* userController.addRoute(EnumHttpMethod.Put, '/users/:id', 'user', [], [], [], new Service(Repository));
+* userController.addRoute(EnumHttpMethod.Delete, '/users/:id', 'user', [], [], [], new Service(Repository));
+* The above lines create a CRUD for users.
+* To send and receive messages to RabbitMQ, it is necessary to create an environment variable called "<CLOUDAMQP_URL>"
+* and provide the connection URL. This variable is used in the "RabbitMQ" class.
+* For more information about each endpoint, refer to the individual documentation of each function/module.
+* @author
+* Aurelino Ferreira dos Santos Junior
+* @see
+* Contact: aurelino.ferreira@gmail.com
+*/
