@@ -24,7 +24,7 @@ class Utils {
     }    
 
     static getDTOfromData(data : any, hideFields: string[]) : any {
-      const len: number = ((hideFields) ? hideFields.length : 0);
+      const len = hideFields.length;
       if (data && len > 0) {    
         const currentKeys = Object.keys(data); 
         let dto : DtoType = {}; 
@@ -33,7 +33,7 @@ class Utils {
           if (hideFields.indexOf(currentKey) < 0) {
             dto[currentKey] = data[currentKey];
           }  
-        }
+        }        
         return dto;
       }  
       return data;

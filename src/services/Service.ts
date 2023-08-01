@@ -9,14 +9,16 @@ export class Service<Model> implements IService<Model>{
        this.repository = repository; 
     }
 
-    resultDTO(data: any[], hideFields: string[]) : any {
-      if (!data || !Array.isArray(data)) {
-        return  Utils.getDTOfromData(data, hideFields);
-      }    
+    resultDTO(data: any[], hideFields: string[]) : any {      
+      if (!data || !Array.isArray(data)) {         
+        let rec = Utils.getDTOfromData(data, hideFields);
+        return rec;
+      }           
       const dto = data.map((rec) => {
         rec = Utils.getDTOfromData(rec, hideFields);
         return rec;
       });
+      return dto;
     }
 
     async exists(model: Model, params: ParamsDictionary, realNames: string[]) : Promise<boolean>{
