@@ -5,7 +5,7 @@ import { EnumHttpMethod } from "../types/generic/EnumHttpMethod";
 
 const userController = new Controllers();
 
-userController.addRoute(EnumHttpMethod.Get,'/users','user',[],[],['id','name','username'], new Service(Repository));
+userController.addRoute(EnumHttpMethod.Get,'/users','user',[],[],['name','username'], new Service(Repository));
 userController.addRoute(EnumHttpMethod.Get,'/users/:id','user',[],[],[],new Service(Repository));
 userController.addRoute(EnumHttpMethod.Post,'/users','user',[],['email','name','username'],[],new Service(Repository));
 userController.addRoute(EnumHttpMethod.Put,'/users/:id','user',[],[],[],new Service(Repository));
