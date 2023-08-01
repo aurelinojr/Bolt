@@ -5,17 +5,21 @@ import { DtoType } from '../types/generic/DtoType';
 class Utils {
     
     static replaceKeysWithArray(params: ParamsDictionary, realNames: string[]) : ParamsDictionary {
-        const len: number = ((realNames) ? realNames.length : 0);
+        const len = realNames.length;
         if (len > 0) {     
-          const currentKeys = Object.keys(params);          
+          const currentKeys = Object.keys(params);     
+          let obj: ParamsDictionary = {};     
           for (let index=0; index < currentKeys.length; index++) {
             const currentKey = currentKeys[index];
-            const currentName = realNames[index];
-            if (currentKey != currentName) {              
-              params[currentName] = params[currentKey];
-              delete params[currentKey];
+            if (index < len && realNames[index] != '') {              
+              const newName = realNames[index];
+              obj[newName] = params[currentKey];
+            } else {
+              obj[currentKey] = params[currentKey];
             }  
           }
+          console.log(JSON.stringify(obj));
+          return obj;
         }  
         return params;
     }    

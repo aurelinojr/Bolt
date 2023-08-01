@@ -12,6 +12,6 @@ export interface IService<Model> {
   
     update(model: Model, params: ParamsDictionary, realNames: string[], hideFields: string[], data: JSON) : Promise<any>
       
-    delete(model: Model, params: ParamsDictionary, realNames: string[]) : Promise<any>;
+    delete(model: Model, params: ParamsDictionary, realNames: string[]) : Promise<boolean>;
     
 }

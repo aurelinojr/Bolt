@@ -81,7 +81,7 @@ class PrismaRepository implements IRepository<PrismaClient> {
    * @returns {Promise<boolean>} Retorna um valor true (deletou) false(não deletou).
    */   
     async delete(model : ModelType, params : ParamsDictionary) : Promise<boolean> {
-      const result = await (this.prisma[model] as any).delete({
+      const result = await (this.prisma[model] as any).deleteMany({
         where : params
       });   
       return !!result;
