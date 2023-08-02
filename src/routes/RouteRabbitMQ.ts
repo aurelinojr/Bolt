@@ -1,6 +1,7 @@
 import { Router} from 'express'
 import { Request, Response } from 'express';
-import { rabbitMQConnection } from '../brokers/RanbbitMQConnection';
+import { rabbitMQConnection } from '../brokers/RabbitMQConnection';
+
 
 const RouteRabbitMQ = Router();
 

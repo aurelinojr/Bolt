@@ -4,7 +4,7 @@
   "description": "Facilitador de construção de software",
   "main": "server.js",
   "scripts": {
-    "start": "tsc && node ./dist/server.js",
+    "start": "tsc && node ./dist/src/server.js",
     "test": "jest"
   },
   "author": "Aurelino Ferreira",

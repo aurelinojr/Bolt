@@ -17,6 +17,7 @@ export class Service<Model> implements IService<Model>{
         rec = Utils.getDTOfromData(rec, hideFields);
         return rec;
       });
+      return dto;
     }
 
     async exists(model: Model, params: ParamsDictionary, realNames: string[]) : Promise<boolean>{
